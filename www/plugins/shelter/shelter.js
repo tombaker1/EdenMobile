@@ -100,7 +100,7 @@
         render: function () {
 
             // records loaded from the server have more data than locally stored
-            var templateData = this.model.getData(shelterTable);
+            var templateData = this.model.getTableData(shelterTable);
             this.$el.html(this.template(templateData));
 
             return this;

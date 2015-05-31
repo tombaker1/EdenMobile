@@ -79,7 +79,7 @@
             this._serverState = 0; // 0 = not on server, 1 = server valid
             this._type = "";
             this._table = null;
-            
+
             //if (options && options.table) {
             //    this.initData(options.type, options.table);
             //}
@@ -152,7 +152,133 @@
             console.log("mFormData::sendData not implemented, should be overridden");
         },
 
-        getData: function (table) {
+        getFormData: function (table) {
+            var rawData = this.get("rawData");
+            var data = {};
+            for (var i = 0; i < table.length; i++) {
+                var tableItem = table[i];
+                var name = tableItem["name"];
+                if (!tableItem["form_path"]) {
+                    continue;
+                }
+                var path = tableItem["form_path"].split("/");
+
+                if (tableItem["reference"]) {
+                    // If there is a data_path field in the table reference, then
+                    // the value is referenced from another db table, and not the
+                    // main record.  You must go back to the root of the download
+                    // and follow the data_path
+                    var referenceName = tableItem["reference"];
+                    if (!rawData) {
+                        continue;
+                    }
+                    var referenceRecord = rawData[referenceName];
+                    if (!referenceRecord) {
+                        data[name] = "-";
+                        continue;
+                    }
+                    var referenceUuid = referenceRecord["@uuid"];
+                    var referenceResource = referenceRecord["@resource"];
+                    var serverData = app.controller.getData(this._type);
+                    var referenceArray = serverData["$_" + referenceResource];
+                    for (var j = 0; j < referenceArray.length; j++) {
+                        var referenceItem = referenceArray[j];
+                        if (referenceItem["@uuid"] === referenceUuid) {
+                            if (referenceItem[name]) {
+                                data[name] = referenceItem[name]["$"];
+                            } else {
+                                data[name] = "-";
+                            }
+                            break;
+                        }
+                    }
+
+                    //data[name] = name;
+                } else {
+                    var value = undefined;
+                    if (rawData && rawData[name]) {
+                        value = rawData[name];
+                    }
+                    if (value !== undefined) {
+                        var controlType = tableItem["control"];
+                        switch (controlType) {
+                        case "string":
+                            {
+                                data[name] = value;
+                            }
+                            break;
+                         case "text":
+                            {
+                                data[name] = value["@value"];
+                            }
+                            break;
+                       case "integer":
+                            {
+                                data[name] = value["@value"];
+                            }
+                            break;
+                        case "select":
+                            {
+                                data[name] = value["@value"];
+                            }
+                            break;
+                        default:
+                            {
+                                if (rawData) {
+                                    var reference = rawData["$k_" + name];
+                                    if (reference) {
+                                        data[name] = reference["$"];
+                                    } else {
+                                        data[name] = undefined; //"unknown";
+                                    }
+                                } else {
+                                    value = undefined; //"-";
+                                }
+                            }
+                        }
+                    } else {
+                        if (rawData) {
+                            var reference = rawData["$k_" + name];
+                            if (reference) {
+                                data[name] = reference["$"];
+                            } else {
+                                data[name] = undefined; //"unknown";
+                            }
+                        } else {
+                            value = undefined; //"-";
+                        }
+
+                    }
+                    /*
+                    if (typeof value === "string") {
+                        data[name] = value;
+                    } else if (typeof value === "number") {
+                        data[name] = value;
+                    } else if (typeof value === "integer") {
+                        data[name] = value;
+                    } else if (name.indexOf("$_") >= 0) {
+                        data[name] = value["$"];
+                    } else if (typeof value === "object") {
+                        data[name] = value["@value"];
+                    } else {
+                        if (rawData) {
+                            var reference = rawData["$k_" + name];
+                            if (reference) {
+                                data[name] = reference["$"];
+                            } else {
+                                data[name] = undefined; //"unknown";
+                            }
+                        } else {
+                            value = undefined; //"-";
+                        }
+                    }
+                    */
+                }
+            }
+            return data;
+        },
+
+        getTableData: function (table) {
             var rawData = this.get("rawData");
             var data = {};
             for (var i = 0; i < table.length; i++) {
@@ -185,30 +311,29 @@
                     // and follow the data_path
                     var referenceName = tableItem["reference"];
                     if (!rawData) {
-                            continue;
+                        continue;
                     }
                     var referenceRecord = rawData[referenceName];
                     if (!referenceRecord) {
-                            data[name] = "-";
-                            continue;
+                        data[name] = "-";
+                        continue;
                     }
                     var referenceUuid = referenceRecord["@uuid"];
                     var referenceResource = referenceRecord["@resource"];
                     var serverData = app.controller.getData(this._type);
                     var referenceArray = serverData["$_" + referenceResource];
-                    for (var j  = 0; j < referenceArray.length; j++) {
+                    for (var j = 0; j < referenceArray.length; j++) {
                         var referenceItem = referenceArray[j];
                         if (referenceItem["@uuid"] === referenceUuid) {
                             if (referenceItem[name]) {
                                 data[name] = referenceItem[name]["$"];
-                            }
-                            else {
+                            } else {
                                 data[name] = "-";
                             }
                             break;
                         }
                     }
-                    
+
                     //data[name] = name;
                 } else {
                     var value = undefined;
@@ -230,24 +355,23 @@
                     } else if (typeof value === "object") {
                         data[name] = value["$"];
                     } else {
-                            if (rawData) {
-                        var reference = rawData["$k_" + name];
-                        if (reference) {
-                            data[name] = reference["$"];
+                        if (rawData) {
+                            var reference = rawData["$k_" + name];
+                            if (reference) {
+                                data[name] = reference["$"];
+                            } else {
+                                data[name] = undefined; //"unknown";
+                            }
                         } else {
-                            data[name] = "unknown";
+                            value = undefined; //"-";
                         }
-                    }
-                    else {
-                            value = "-";
-                    }
                     }
                 }
             }
             return data;
         },
-        
-        initData: function(form, table) {
+
+        initData: function (form, table) {
             var data = {};
             for (var i = 0; i < table.length; i++) {
                 var tableItem = table[i];
@@ -274,10 +398,10 @@
                 if (!record) {
                     continue;
                 }
-                
-                                // find item in array
+
+                // find item in array
                 if (Array.isArray(record)) {
-                        var value = "";
+                    var value = "";
                     for (var j = 0; j < record.length; j++) {
                         var recordItem = record[j];
                         if (recordItem["@name"] === name) {
@@ -309,8 +433,7 @@
                             break;
                         }
                     }
-                }
-                else {
+                } else {
                     continue;
                 }
 
@@ -341,7 +464,7 @@
                     */
                     //data[name] = name;
                 } else {
-                        /*
+                    /*
                     var value = tableItem["value"];
                     if (typeof value === "string") {
                         data[name] = value;

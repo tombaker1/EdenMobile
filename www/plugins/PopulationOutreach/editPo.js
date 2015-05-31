@@ -337,7 +337,7 @@
         showForm: function (form, model) {
             console.log("editHouseholdForm showForm");
             this.model = model;
-            var tableData = model.getData(editHouseholdForm);
+            var tableData = model.getTableData(editHouseholdForm);
             for (var i = 0; i < editHouseholdForm.length; i++) {
                 var value = "";
                 var columnItem = editHouseholdForm[i];

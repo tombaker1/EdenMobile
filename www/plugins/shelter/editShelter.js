@@ -48,7 +48,7 @@
         },
         {
             name: "shelter_service_id",
-            control: "select",
+            control: "select",  // TODO: make this a list type
             form_path: "$_cr_shelter/field",
             form: "shelter-form",
             label: ""
@@ -135,7 +135,7 @@
         },
         {
             name: "comments",
-            control: "string",
+            control: "text",
             form_path: "$_cr_shelter/field",
             form: "shelter-form",
             label: ""
@@ -143,11 +143,11 @@
         {
             name: "obsolete",
             control: "checkbox"
-        },
+        }/*,
         {
             name: "footer",
             control: "text"
-        }
+        }*/
         ];
 
     var pageView = app.view.getPage("pageView");
@@ -286,7 +286,7 @@
         showForm: function (form, model) {
             console.log("editShelter showForm");
             this.model = model;
-            var tableData = model.getData(editShelterForm);
+            var tableData = model.getFormData(editShelterForm);
             for (var i = 0; i < editShelterForm.length; i++) {
                 var value = "";
                 var columnItem = editShelterForm[i];
@@ -312,15 +312,15 @@
                 var columnItem = editShelterForm[i];
                 var columnName = columnItem["name"];
                 var item = model.get(columnName);
-                if (item !== undefined) {
+                //if (item !== undefined) {
                     var control = this.controlList[i];
                     if (control) {
-                        var value = control.getData(item);
+                        var value = control.getData();
                         formData[columnName] = value;
                         //model.set(columnName,value);
                         console.log("\t" + columnName + ": " + value);
                     }
-                }
+                //}
             }
             model.set(formData);
         },

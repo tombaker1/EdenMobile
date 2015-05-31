@@ -344,7 +344,7 @@
         showForm: function (form, model) {
             console.log("editHospital showForm");
             this.model = model;
-            var tableData = model.getData(editHospitalForm);
+            var tableData = model.getFormData(editHospitalForm);
             for (var i = 0; i < editHospitalForm.length; i++) {
                 var value = "";
                 var columnItem = editHospitalForm[i];

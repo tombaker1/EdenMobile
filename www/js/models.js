@@ -186,12 +186,17 @@
                         var referenceItem = referenceArray[j];
                         if (referenceItem["@uuid"] === referenceUuid) {
                             var referenceUrl = referenceItem["@url"];
-                            if (referenceUrl) {
-                                var rfields = referenceUrl.split("/");
-                                var referenceId = rfields[rfields.length-1];
-                                data[name] = parseInt(referenceId);
+                            var key = tableItem["reference_key"];
+                            if (key) {
+                                data[name] = referenceItem[key]["@value"];
                             } else {
-                                data[name] = "";
+                                if (referenceUrl) {
+                                    var rfields = referenceUrl.split("/");
+                                    var referenceId = rfields[rfields.length-1];
+                                    data[name] = parseInt(referenceId);
+                                } else {
+                                    data[name] = "";
+                                }
                             }
                             break;
                         }

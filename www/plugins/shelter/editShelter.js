@@ -68,8 +68,9 @@
             name: "addr_street",
             control: "string",
             form_path: "$_gis_location/field",
-            data_path: "$_gis_location/field",
+            //data_path: "$_gis_location/addr_street",
             reference: "$k_location_id",
+            reference_key: "addr_street",
             form: "gis-location-form",
             label: ""
         },
@@ -77,8 +78,9 @@
             name: "addr_postcode",
             control: "string",
             form_path: "$_gis_location/field",
-            data_path: "$_gis_location/field",
+            //data_path: "$_gis_location/addr_postcode",
             reference: "$k_location_id",
+            reference_key: "addr_postcode",
             form: "gis-location-form",
             label: ""
         },
@@ -105,7 +107,8 @@
             control: "select",
             form_path: "$_cr_shelter/field",
             form: "shelter-form",
-            label: ""
+            label: "",
+            reference: "$k_person_id"
         },
         {
             name: "population",

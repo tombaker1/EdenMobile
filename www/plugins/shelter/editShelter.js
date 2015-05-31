@@ -59,7 +59,7 @@
             name: "parent",
             control: "select",
             form_path: "$_gis_location/field",
-            reference: "$k_location_id",
+            reference: "$k_location_id/$k_parent",
             form: "gis-location-form",
             common_name: "Country",
             label: ""

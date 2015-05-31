@@ -169,6 +169,45 @@
                     // the value is referenced from another db table, and not the
                     // main record.  You must go back to the root of the download
                     // and follow the data_path
+                    var referenceList = tableItem["reference"].split('/');
+                    if (!rawData) {
+                        continue;
+                    }
+                    var item = rawData;
+                    for (var referenceIndex = 0; referenceIndex < referenceList.length; referenceIndex++) {
+                        var referenceName = referenceList[referenceIndex];
+                        var referenceRecord = item[referenceName];
+                        var referenceUuid = referenceRecord["@uuid"];
+                        var referenceResource = referenceRecord["@resource"];
+                        var serverData = app.controller.getData(this._type);
+                        var referenceArray = serverData["$_" + referenceResource];
+                        for (var j = 0; j < referenceArray.length; j++) {
+                            var referenceItem = referenceArray[j];
+                            if (referenceItem["@uuid"] === referenceUuid) {
+                                item = referenceItem;
+                                break;
+                            }
+                        }
+                    }
+                    
+                        if (item) {
+                            var referenceUrl = referenceItem["@url"];
+                            var key = tableItem["reference_key"];
+                            if (key) {
+                                data[name] = referenceItem[key]["@value"];
+                            } else {
+                                if (referenceUrl) {
+                                    var rfields = referenceUrl.split("/");
+                                    var referenceId = rfields[rfields.length-1];
+                                    data[name] = parseInt(referenceId);
+                                } else {
+                                    data[name] = "";
+                                }
+                            }
+                            //break;
+                        }
+                    
+       /*
                     var referenceName = tableItem["reference"];
                     if (!rawData) {
                         continue;
@@ -201,6 +240,7 @@
                             break;
                         }
                     }
+                    */
 
                     //data[name] = name;
                 } else {

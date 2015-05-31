@@ -201,9 +201,6 @@
                         } else {
                             // For select fields you use the id
                             if (referenceId) {
-                                
-                                //var rfields = referenceUrl.split("/");
-                                //var referenceId = rfields[rfields.length - 1];
                                 data[name] = parseInt(referenceId);
                             } else {
                                 data[name] = "";

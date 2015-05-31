@@ -185,8 +185,11 @@
                     for (var j = 0; j < referenceArray.length; j++) {
                         var referenceItem = referenceArray[j];
                         if (referenceItem["@uuid"] === referenceUuid) {
-                            if (referenceItem["@mci"]) {
-                                data[name] = parseInt(referenceItem["@mci"]);
+                            var referenceUrl = referenceItem["@url"];
+                            if (referenceUrl) {
+                                var rfields = referenceUrl.split("/");
+                                var referenceId = rfields[rfields.length-1];
+                                data[name] = parseInt(referenceId);
                             } else {
                                 data[name] = "";
                             }

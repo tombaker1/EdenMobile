@@ -45,7 +45,8 @@
             control: "select",
             form_path: "$_cr_shelter/field",
             form: "shelter-form",
-            label: ""
+            label: "",
+            reference: "$k_shelter_type_id"
         },
         {
             name: "shelter_service_id",

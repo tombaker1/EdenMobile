@@ -174,23 +174,34 @@
                         continue;
                     }
                     var item = rawData;
+                    var found = false;
+                    //var recordItem = undefined;
                     for (var referenceIndex = 0; referenceIndex < referenceList.length; referenceIndex++) {
                         var referenceName = referenceList[referenceIndex];
                         var referenceRecord = item[referenceName];
+                        if (!referenceRecord) {
+                                continue;
+                        }
                         var referenceUuid = referenceRecord["@uuid"];
                         var referenceResource = referenceRecord["@resource"];
                         var serverData = app.controller.getData(this._type);
                         var referenceArray = serverData["$_" + referenceResource];
+                        found = false;
                         for (var j = 0; j < referenceArray.length; j++) {
                             var referenceItem = referenceArray[j];
                             if (referenceItem["@uuid"] === referenceUuid) {
                                 item = referenceItem;
+                                found = true;
                                 break;
                             }
                         }
+                        if (!found) {
+                                item = undefined;
+                                break;
+                        }
                     }
                     // If the path was successfully referenced then extract the value
-                    if (item) {
+                    if (found) {
                         var referenceUrl = referenceItem["@url"];
                         var key = tableItem["reference_key"];
                         var referenceId = referenceItem["@id"];

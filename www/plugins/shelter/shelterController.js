@@ -39,7 +39,7 @@
 
     var formList = {
         "shelter": {
-            form_path: "/cr/shelter.s3json",
+            form_path: "/cr/shelter.s3json?show_ids=true",
             form_record: "$_cr_shelter",
             page: "page-shelter"
         }

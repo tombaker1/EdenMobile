@@ -189,60 +189,28 @@
                             }
                         }
                     }
-                    
-                        if (item) {
-                            var referenceUrl = referenceItem["@url"];
-                            var key = tableItem["reference_key"];
-                            if (key) {
-                                data[name] = referenceItem[key]["@value"];
+                    // If the path was successfully referenced then extract the value
+                    if (item) {
+                        var referenceUrl = referenceItem["@url"];
+                        var key = tableItem["reference_key"];
+                        var referenceId = referenceItem["@id"];
+                        
+                        // For literal values use the key to reference the data
+                        if (key) {
+                            data[name] = referenceItem[key]["@value"];
+                        } else {
+                            // For select fields you use the id
+                            if (referenceId) {
+                                
+                                //var rfields = referenceUrl.split("/");
+                                //var referenceId = rfields[rfields.length - 1];
+                                data[name] = parseInt(referenceId);
                             } else {
-                                if (referenceUrl) {
-                                    var rfields = referenceUrl.split("/");
-                                    var referenceId = rfields[rfields.length-1];
-                                    data[name] = parseInt(referenceId);
-                                } else {
-                                    data[name] = "";
-                                }
+                                data[name] = "";
                             }
-                            //break;
-                        }
-                    
-       /*
-                    var referenceName = tableItem["reference"];
-                    if (!rawData) {
-                        continue;
-                    }
-                    var referenceRecord = rawData[referenceName];
-                    if (!referenceRecord) {
-                        data[name] = "-";
-                        continue;
-                    }
-                    var referenceUuid = referenceRecord["@uuid"];
-                    var referenceResource = referenceRecord["@resource"];
-                    var serverData = app.controller.getData(this._type);
-                    var referenceArray = serverData["$_" + referenceResource];
-                    for (var j = 0; j < referenceArray.length; j++) {
-                        var referenceItem = referenceArray[j];
-                        if (referenceItem["@uuid"] === referenceUuid) {
-                            var referenceUrl = referenceItem["@url"];
-                            var key = tableItem["reference_key"];
-                            if (key) {
-                                data[name] = referenceItem[key]["@value"];
-                            } else {
-                                if (referenceUrl) {
-                                    var rfields = referenceUrl.split("/");
-                                    var referenceId = rfields[rfields.length-1];
-                                    data[name] = parseInt(referenceId);
-                                } else {
-                                    data[name] = "";
-                                }
-                            }
-                            break;
                         }
                     }
-                    */
 
-                    //data[name] = name;
                 } else {
                     var value = undefined;
                     if (rawData && rawData[name]) {
@@ -255,12 +223,12 @@
                                 data[name] = value;
                             }
                             break;
-                         case "text":
+                        case "text":
                             {
                                 data[name] = value["@value"];
                             }
                             break;
-                       case "integer":
+                        case "integer":
                             {
                                 data[name] = value["@value"];
                             }

@@ -37,7 +37,8 @@
             name: "organisation_id",
             control: "select",
             form_path: "$_cr_shelter/field",
-            form: "organisation-form"
+            form: "organisation-form",
+            reference: "$k_organisation_id"
         },
         {
             name: "shelter_type_id",

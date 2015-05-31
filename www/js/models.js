@@ -162,6 +162,7 @@
                     continue;
                 }
                 var path = tableItem["form_path"].split("/");
+                var controlType = tableItem["control"];
 
                 if (tableItem["reference"]) {
                     // If there is a data_path field in the table reference, then
@@ -184,10 +185,10 @@
                     for (var j = 0; j < referenceArray.length; j++) {
                         var referenceItem = referenceArray[j];
                         if (referenceItem["@uuid"] === referenceUuid) {
-                            if (referenceItem[name]) {
-                                data[name] = referenceItem[name]["$"];
+                            if (referenceItem["@mci"]) {
+                                data[name] = parseInt(referenceItem["@mci"]);
                             } else {
-                                data[name] = "-";
+                                data[name] = "";
                             }
                             break;
                         }
@@ -200,7 +201,6 @@
                         value = rawData[name];
                     }
                     if (value !== undefined) {
-                        var controlType = tableItem["control"];
                         switch (controlType) {
                         case "string":
                             {
@@ -249,30 +249,6 @@
                         }
 
                     }
-                    /*
-                    if (typeof value === "string") {
-                        data[name] = value;
-                    } else if (typeof value === "number") {
-                        data[name] = value;
-                    } else if (typeof value === "integer") {
-                        data[name] = value;
-                    } else if (name.indexOf("$_") >= 0) {
-                        data[name] = value["$"];
-                    } else if (typeof value === "object") {
-                        data[name] = value["@value"];
-                    } else {
-                        if (rawData) {
-                            var reference = rawData["$k_" + name];
-                            if (reference) {
-                                data[name] = reference["$"];
-                            } else {
-                                data[name] = undefined; //"unknown";
-                            }
-                        } else {
-                            value = undefined; //"-";
-                        }
-                    }
-                    */
                 }
             }
             return data;

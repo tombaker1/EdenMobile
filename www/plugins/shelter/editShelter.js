@@ -296,15 +296,13 @@
                 var value = "";
                 var columnItem = editShelterForm[i];
                 var columnName = columnItem["name"];
-                 var item = tableData[columnName];
-                if (item) {
-                    var control = this.controlList[i];
-                    if (control) {
+                var item = tableData[columnName];
+                var control = this.controlList[i];
+                if (control) {
+                    control.reset();
+                    if (item) {
                         control.setData(item);
                     }
-                }
-                else {
-                    console.log("\titem not found " + columnName);
                 }
             }
         },

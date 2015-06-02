@@ -180,7 +180,7 @@
                         var referenceName = referenceList[referenceIndex];
                         var referenceRecord = item[referenceName];
                         if (!referenceRecord) {
-                                continue;
+                            continue;
                         }
                         var referenceUuid = referenceRecord["@uuid"];
                         var referenceResource = referenceRecord["@resource"];
@@ -196,8 +196,8 @@
                             }
                         }
                         if (!found) {
-                                item = undefined;
-                                break;
+                            item = undefined;
+                            break;
                         }
                     }
                     // If the path was successfully referenced then extract the value
@@ -205,13 +205,12 @@
                         var referenceUrl = referenceItem["@url"];
                         var key = tableItem["reference_key"];
                         var referenceId = referenceItem["@id"];
-                        
+
                         // For literal values use the key to reference the data
                         if (key) {
                             if (referenceItem[key]) {
-                            data[name] = referenceItem[key]["@value"];
-                            }
-                            else {
+                                data[name] = referenceItem[key]["@value"];
+                            } else {
                                 data[name] = "";
                             }
                         } else {

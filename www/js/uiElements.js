@@ -37,7 +37,7 @@
         },
 
         constructor: function (options) {
-            console.log("pageView constructor");
+            //console.log("pageView constructor");
 
             // Resolve events between super and sub class
             this.events = _.extend({}, this.commonEvents, this.events);
@@ -63,7 +63,7 @@
         },
 
         initialize: function (options) {
-            console.log("initialize pageView");
+            //console.log("initialize pageView");
 
 
         },
@@ -173,7 +173,7 @@
         commonEvents: {},
 
         constructor: function (options) {
-            console.log("pageView constructor");
+            //console.log("pageView constructor");
 
             // Resolve events between super and sub class
             this.events = _.extend({}, this.commonEvents, this.events);
@@ -271,13 +271,13 @@
         },
 
         setData: function (data) {
-            console.log("stringControl setData");
+            //console.log("stringControl setData");
             this._data = data;
             this.$el.find("input").val(data);
         },
 
         getData: function () {
-            console.log("stringControl getData");
+            //console.log("stringControl getData");
             this._data = this.$el.find("input").val();
             return this._data;;
         },
@@ -388,13 +388,13 @@
         },
 
         setData: function (data) {
-            console.log("integerControl setData");
+            //console.log("integerControl setData");
             this._data = data;
             this.$el.find("input").val(data);
         },
 
         getData: function () {
-            console.log("integerControl getData");
+            //console.log("integerControl getData");
             this._data = this.$el.find("input").val();
             return this._data;;
         },
@@ -464,13 +464,13 @@
         },
 
         setData: function (data) {
-            console.log("selectControl setData");
+            //console.log("selectControl setData");
             this._data = data;
             this.$el.find("select").val(data);
         },
 
         getData: function () {
-            console.log("selectControl getData");
+            //console.log("selectControl getData");
             this._data = this.$el.find("select").val();
             return this._data;;
         },

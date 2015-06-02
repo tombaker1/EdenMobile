@@ -203,7 +203,7 @@
                 var required = tableItem.required && (tableItem.required === true);
                var control = app.view.getControl(controlType);
                 if (control) {
-                    console.log("control found " + controlType);
+                    //console.log("control found " + controlType);
                     var item = new control({
                         name: controlName,
                         common_name: tableItem.common_name,

@@ -71,8 +71,8 @@
 
         function onTimeout() {
             console.log("newRequestData: onTimeout " + id);
-            this.setActive(0);
-            if (this.numActive()) {
+            app.communicator.setActive(0);
+            if (app.communicator.numActive()) {
                 xhr.abort();
                 callback(id, false, "Server not responding");
             }

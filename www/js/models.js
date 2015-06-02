@@ -208,7 +208,12 @@
                         
                         // For literal values use the key to reference the data
                         if (key) {
+                            if (referenceItem[key]) {
                             data[name] = referenceItem[key]["@value"];
+                            }
+                            else {
+                                data[name] = "";
+                            }
                         } else {
                             // For select fields you use the id
                             if (referenceId) {

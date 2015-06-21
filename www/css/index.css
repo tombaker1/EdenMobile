@@ -108,11 +108,15 @@ display: inline-table;
 	pointer-events: none;
 }
 
-.se-notify.visible,
+.se-notify.visible {
+    visibility: visible;
+	opacity:1;
+}
+
 .se-modal.visible {
     visibility: visible;
 	opacity:1;
-	/* pointer-events: auto; */
+	pointer-events: auto; 
 }
 
 .se-notify > #frame,

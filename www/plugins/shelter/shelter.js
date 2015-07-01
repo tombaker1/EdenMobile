@@ -213,8 +213,8 @@
                     break;
                 }
             }
-            if (!itemElement) {
-                itemElement = new shelterItemElement({
+            if (!itemElement && this._tableItem) { 
+                itemElement = new this._tableItem({
                     model: model,
                     table: this._description
                 });
@@ -361,5 +361,6 @@
     //app.pluginManager.addObject(sheltersPage);
     app.pluginManager.addElement("object",sheltersPage);
     app.pluginManager.addElement("description",shelterTable);
+    app.pluginManager.addElement("tableItem",shelterItemElement);
 
 })(jQuery, window, document);

@@ -61,6 +61,7 @@
             this._config = options["config"];
             if (this._config) {
                 this._description = this._config["description"];
+                this._tableItem = this._config["tableItem"];
             }
 
             // Call the original constructor

@@ -77,7 +77,8 @@
                         var template = data.rawData;
                         var newPage = new obj({
                             name: pageName,
-                            content: template
+                            content: template,
+                            config: data
                         });
                         newPage.render();
                         app.view.addPage(pageName, newPage);
@@ -309,6 +310,14 @@
         var currentPlugin = this.pluginLoadList[0];
         currentPlugin["config"] = currentPlugin["config"].concat(config);
 
+    };
+
+    pluginManager.prototype.addElement = function (key,value) {
+        //console.log("pluginManager addController");
+        var currentPlugin = this.pluginLoadList[0];
+        var config = currentPlugin["config"];
+        var configLoading = config[currentPlugin.loadIndex]
+        configLoading[key] = value;
     };
 
     pluginManager.prototype.addObject = function (obj) {

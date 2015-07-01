@@ -87,9 +87,13 @@
             // Set up model change event
             var model = this.model;
             model.on("change", this.update.bind(this));
-            this.template = this.createTemplate(shelterTable);
+            if (options["table"]) {
+                this._table = options["table"];
+                this.template = this.createTemplate();
+            }
         },
-        createTemplate: function(table) {
+        createTemplate: function() {
+            var table = this._table;
             var templateString = "<td class='actions se-column-all'><input id='open' class='edit-button' value='Open' type='button'></td>";
             for (var i = 0; i < table.length; i++) {
                 var tableItem = table[i];
@@ -100,7 +104,7 @@
         render: function () {
 
             // records loaded from the server have more data than locally stored
-            var templateData = this.model.getTableData(shelterTable);
+            var templateData = this.model.getTableData(this._table);
             this.$el.html(this.template(templateData));
 
             return this;
@@ -149,7 +153,7 @@
             '</th>'
         ),
         content_template: null,
-        _table: shelterTable,
+        _table: null,
         events: {
             "click #link-button": "navigate",
             "click #new-item": "onNewItem",
@@ -164,6 +168,10 @@
             var name = options["name"];
             if (name) {
                 this.name = name;
+            }
+            
+            if (this._description) {
+                this._table = this._description;
             }
         },
         setContent: function (content) {
@@ -182,8 +190,8 @@
 
             // Fill in table header labels
             var headerRow = this.$el.find("thead tr");
-            for (var i = 0; i < shelterTable.length; i++) {
-                var columnItem = shelterTable[i];
+            for (var i = 0; i < this._description.length; i++) {
+                var columnItem = this._description[i];
                 var priority = columnItem["table_priority"];
                 var index = i + 1;
                 var label = columnItem["label"];
@@ -207,7 +215,8 @@
             }
             if (!itemElement) {
                 itemElement = new shelterItemElement({
-                    model: model
+                    model: model,
+                    table: this._description
                 });
                 this._itemList.push(itemElement);
                 var tableBody = this.$el.find("tbody");
@@ -255,11 +264,11 @@
             console.log("page-shelter updateForm");
             var tableHeader = this.$el.find("thead tr");
 
-            for (var i = 0; i < shelterTable.length; i++) {
+            for (var i = 0; i < this._description.length; i++) {
                 var record = obj;
                 var label = "";
                 var value = "";
-                var columnItem = shelterTable[i];
+                var columnItem = this._description[i];
                 var columnName = columnItem["name"];
                 var path = columnItem["form_path"];
                 var pathList = path.split("/");
@@ -349,6 +358,8 @@
     }
     });
 
-    app.pluginManager.addObject(sheltersPage);
+    //app.pluginManager.addObject(sheltersPage);
+    app.pluginManager.addElement("object",sheltersPage);
+    app.pluginManager.addElement("description",shelterTable);
 
 })(jQuery, window, document);

@@ -57,6 +57,11 @@
             if (contentTemplate) {
                 this.content(contentTemplate);
             }
+            
+            this._config = options["config"];
+            if (this._config) {
+                this._description = this._config["description"];
+            }
 
             // Call the original constructor
             Backbone.View.apply(this, arguments);

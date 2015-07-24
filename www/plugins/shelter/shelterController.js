@@ -21,7 +21,7 @@
 (function ($, window, document, undefined) {
     "use strict";
 
-    var forms = {
+    var forms_ = {
         "shelter-form": {
             form_path: "/cr/shelter/create.s3json?options=true&references=true",
             form_record: "$_cr_shelter"
@@ -37,7 +37,7 @@
     };
 
 
-    var formList = {
+    var formList_ = {
         "shelter": {
             form_path: "/cr/shelter.s3json?show_ids=true",
             form_record: "$_cr_shelter",
@@ -45,7 +45,7 @@
         }
     };
 
-    var tableRequirements = [
+    var tableRequirements_ = [
         {
             name: "shelterTable",
             //tableSpec: shelterTable,
@@ -58,27 +58,32 @@
             req: ["shelter-form", "gis-location-form","organisation-form"],
             page: "page-edit-shelter"
         }];
+   app.pluginManager.addElement("forms",forms_);
+   app.pluginManager.addElement("formList",formList_);
+   app.pluginManager.addElement("tables",tableRequirements_);
 
     // The master application controller
-    function controller() {
+    function controller(config) {
         //console.log("settings controller");
         this._pages = {};
         this._formURL = "/cr/shelter/create.s3json?options=true&references=true";
+        this._config = config;
+        _.extend(this,config);
     };
 
     controller.prototype.init = function (options) {
         console.log("shelterController init");
 
         // Register models for this controller
-        for (var formName in forms) {
+        for (var formName in this.forms) {
             app.controller.setControllerByModel(formName, this);
         }
-        for (var dataName in formList) {
+        for (var dataName in this.formList) {
             app.controller.setControllerByModel(dataName, this);
         }
 
         // Load the saved data or initialize data
-        for (var key in forms) {
+        for (var key in this.forms) {
             var rawData = app.storage.read(key);
             if (rawData) {
                 var data = JSON.parse(rawData);
@@ -94,7 +99,7 @@
         //console.log("settings controller onLoad");
         var path = app.controller.getHostURL();
 
-        var formSpec = forms[name] || formList[name];
+        var formSpec = this.forms[name] || this.formList[name];
         if (formSpec) {
             path += formSpec["form_path"];
         } else {
@@ -108,7 +113,7 @@
 
     controller.prototype.updateResponse = function (name, data, rawData) {
         //console.log("settings controller updateResponse");
-        var formSpec = forms[name];
+        var formSpec = this.forms[name];
 
         // Save form
         if (name.indexOf("-form") >= 0) {
@@ -220,7 +225,7 @@
         //var page = app.view.getPage("page-cases");
         //var caseStruct = app.controller.getData("case");
         //var serverCases = caseStruct["$_disease_case"];
-        var formItem = formList[name];
+        var formItem = this.formList[name];
         var pageName = formItem["page"];
         var page = app.view.getPage(pageName);
         var modelList = app.controller.getRecordCollection("mShelter");
@@ -308,7 +313,7 @@
         console.log("shelterController: parseForm " + name);
         //return;
         // Create a new model if one doesn't already exist
-        var formRecordName = forms[name]["form_record"];
+        var formRecordName = this.forms[name]["form_record"];
         var formRecord = obj[formRecordName][0]["field"];
         var model = app.controller.getForm(name);
         if (!model) {
@@ -322,8 +327,8 @@
         }
 
         // Update pages
-        for (var i = 0; i < tableRequirements.length; i++) {
-            var req = tableRequirements[i];
+        for (var i = 0; i < this.tables.length; i++) {
+            var req = this.tables[i];
             var pageName = req["page"];
             var page = app.view.getPage(pageName);
             if (page) {
@@ -357,8 +362,8 @@
 
     controller.prototype.updateAll = function () {
 
-        app.controller.updateData(Object.keys(forms));
-        app.controller.updateData(Object.keys(formList));
+        app.controller.updateData(Object.keys(this.forms));
+        app.controller.updateData(Object.keys(this.formList));
     };
 
     controller.prototype.newItem = function () {

@@ -87,7 +87,7 @@
                 case "controller":
                     {
                         //console.log("start settings");
-                        var controller = new obj;
+                        var controller = new obj(data);
                         this.addController(className, controller);
 
                     }

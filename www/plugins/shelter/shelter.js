@@ -117,7 +117,8 @@
 
         onOpen: function () {
             console.log("itemsItemElement onOpen");
-            var controller = app.controller.getControllerByModel("shelter");
+            var modelType = this.model._type;
+            var controller = app.controller.getControllerByModel(modelType);
             controller.editItem(this.model);
         },
 

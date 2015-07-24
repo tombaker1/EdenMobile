@@ -50,7 +50,10 @@
             type: "controller",
             name: "shelterController",
             script: "shelterController.js",
-            classname: "shelterController"
+            classname: "shelterController"//,
+            //forms: "shelterForms",
+            //formList: "shelterFormList",
+            //tables: "shelterTables"
         }
     ];
     app.pluginManager.addPlugin(plugin);

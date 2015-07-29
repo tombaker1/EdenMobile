@@ -24,7 +24,7 @@
 (function ($, window, document, undefined) {
 
 
-    var editShelterForm = [
+    var editShelterForm_ = [
         {
             name: "name",
             control: "string",
@@ -177,7 +177,6 @@
             "<div id='content'></div>"
         ),
         content_template: null,
-        _table: editShelterForm,
         events: {
             "click #link-button": "navigate",
             "click #cancel": "onCancel",
@@ -193,11 +192,12 @@
             if (name) {
                 this.name = name;
             }
+            this._table = this._description;
 
             // Add the controls
             this.controlList = [];
-            for (var i = 0; i < editShelterForm.length; i++) {
-                var tableItem = editShelterForm[i];
+            for (var i = 0; i < this._description.length; i++) {
+                var tableItem = this._description[i];
                 var controlName = tableItem.name;
                 var controlType = tableItem.control;
                 var required = tableItem.required && (tableItem.required === true);
@@ -245,11 +245,11 @@
         },
 
         updateForm: function (obj) {
-            for (var i = 0; i < editShelterForm.length; i++) {
+            for (var i = 0; i < this._description.length; i++) {
                 var record = obj;
                 var label = "";
                 var value = "";
-                var columnItem = editShelterForm[i];
+                var columnItem = this._description[i];
                 var columnName = columnItem["name"];
                 var path = columnItem["form_path"];
                 if (!path) { continue; }
@@ -291,10 +291,10 @@
         showForm: function (form, model) {
             console.log("editShelter showForm");
             this.model = model;
-            var tableData = model.getFormData(editShelterForm);
-            for (var i = 0; i < editShelterForm.length; i++) {
+            var tableData = model.getFormData(this._description);
+            for (var i = 0; i < this._description.length; i++) {
                 var value = "";
-                var columnItem = editShelterForm[i];
+                var columnItem = this._description[i];
                 var columnName = columnItem["name"];
                 var item = tableData[columnName];
                 var control = this.controlList[i];
@@ -310,9 +310,9 @@
         getData: function (model) {
             console.log("editShelter getData");
             var formData = {};
-            for (var i = 0; i < editShelterForm.length; i++) {
+            for (var i = 0; i < this._description.length; i++) {
                 var value = "";
-                var columnItem = editShelterForm[i];
+                var columnItem = this._description[i];
                 var columnName = columnItem["name"];
                 var item = model.get(columnName);
                 //if (item !== undefined) {
@@ -364,5 +364,6 @@
     });
 
     app.pluginManager.addObject(editSheltersPage);
+    app.pluginManager.addElement("description",editShelterForm_);
 
 })(jQuery, window, document);

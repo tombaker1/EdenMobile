@@ -57,5 +57,6 @@
     };
 
     app.pluginManager.addObject(controller);
+    app.pluginManager.addController("settingsController",controller);
 
 })(jQuery, window, document);

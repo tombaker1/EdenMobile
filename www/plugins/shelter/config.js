@@ -50,7 +50,7 @@
             type: "controller",
             name: "shelterController",
             script: "shelterController.js",
-            classname: "shelterController"//,
+            classname: "moduleController"//,
             //forms: "shelterForms",
             //formList: "shelterFormList",
             //tables: "shelterTables"

@@ -37,21 +37,21 @@
             page:"page-shelter",
             plugin:"shelter"
         },
-        {
+        /*{
             name:"Hospitals",
             page:"page-hospital",
             plugin:"hospital"
-        },
+        },*/
         {
             name:"Settings",
             page:"page-settings",
             plugin:"settings"
-        },
+        }/*,
         {
             name:"Languages",
             page:"page-languages",
             plugin:"languages"
-        }
+        }*/
     ],
     plugins: {
         settings: {
@@ -61,7 +61,7 @@
         shelter: {
             name:"shelter",
             config:"config.js"
-        },
+        }/*,
         hospital: {
             name:"hospital",
             config:"config.js"
@@ -70,7 +70,7 @@
        languages: {
             name:"languages",
             config:"config.js"
-        }
+        }*/
     },
     version: "0.1.0"
 };

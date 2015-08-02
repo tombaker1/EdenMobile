@@ -69,13 +69,13 @@
                 var data = config[i];
                 var name = data["name"];
                 var className = data["classname"];
-                var obj = data["object"];
                 switch (data["type"]) {
                 case "page":
                     {
                         var pageName = "page-" + name;
                         var template = data.rawData;
-                        var newPage = new obj({
+                        var obj = data["object"];
+                       var newPage = new obj({
                             name: pageName,
                             content: template,
                             config: data
@@ -87,6 +87,7 @@
                 case "controller":
                     {
                         //console.log("start settings");
+                        var obj = this.controllers[className];
                         var controller = new obj(data);
                         this.addController(className, controller);
 

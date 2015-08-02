@@ -20,59 +20,25 @@
 
 (function ($, window, document, undefined) {
     "use strict";
-/*
-    var forms_ = {
-        "shelter-form": {
-            form_path: "/cr/shelter/create.s3json?options=true&references=true",
-            form_record: "$_cr_shelter"
-        },
-        "gis-location-form": {
-            form_path: "/gis/location/create.s3json?options=true&references=true",
-            form_record: "$_gis_location"
-        },
-        "organisation-form": {
-            form_path: "/org/organisation/create.s3json?options=true&references=true",
-            form_record: "$_org_organisation"
-        }
-    };
+    
+    // mShelter
+    // shelter
+    // page-edit-shelter
+    // page-shelter
+    // shelter_id
+    // shelter_form
 
-
-    var formList_ = {
-        "shelter": {
-            form_path: "/cr/shelter.s3json?show_ids=true",
-            form_record: "$_cr_shelter",
-            page: "page-shelter"
-        }
-    };
-
-    var tableRequirements_ = [
-        {
-            name: "shelterTable",
-            //tableSpec: shelterTable,
-            req: ["shelter-form", "gis-location-form","organisation-form"],
-            page: "page-shelter"
-        },
-        {
-            name: "editShelterForm",
-            //tableSpec: shelterTable,
-            req: ["shelter-form", "gis-location-form","organisation-form"],
-            page: "page-edit-shelter"
-        }];
-   app.pluginManager.addElement("forms",forms_);
-   app.pluginManager.addElement("formList",formList_);
-   app.pluginManager.addElement("tables",tableRequirements_);
-*/
     // The master application controller
     function controller(config) {
         //console.log("settings controller");
         this._pages = {};
-        this._formURL = "/cr/shelter/create.s3json?options=true&references=true";
+        //this._formURL = "/cr/shelter/create.s3json?options=true&references=true";
         this._config = config;
         _.extend(this,config);
     };
 
     controller.prototype.init = function (options) {
-        console.log("shelterController init");
+        console.log("moduleController init");
 
         // Register models for this controller
         for (var formName in this.forms) {
@@ -127,9 +93,9 @@
     };
 
     controller.prototype.submitPath = function (type) {
-        var path = "/cr/shelter.s3json";
+        //var path = "/cr/shelter.s3json";
 
-        return path;
+        return this._submitPath;
     };
 
     controller.prototype.submitResponse = function (status, model, rawData) {
@@ -175,7 +141,7 @@
 
             } else {
                 // Parse for error message
-                console.log("diseaseController error");
+                console.log("moduleController error");
                 var message = response["message"];
                 var page = app.view.getVisiblePage();
                 if (page.clearErrorText) {
@@ -221,7 +187,7 @@
     //-------------------------------------------------------------------------
 
     controller.prototype.updateList = function (name, data) {
-        console.log("shelterController: updateList " + name);
+        console.log("moduleController: updateList " + name);
         //var page = app.view.getPage("page-cases");
         //var caseStruct = app.controller.getData("case");
         //var serverCases = caseStruct["$_disease_case"];
@@ -310,7 +276,7 @@
     };
 
     controller.prototype.parseForm = function (name, obj) {
-        console.log("shelterController: parseForm " + name);
+        console.log("moduleController: parseForm " + name);
         //return;
         // Create a new model if one doesn't already exist
         var formRecordName = this.forms[name]["form_record"];

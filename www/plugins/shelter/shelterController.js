@@ -61,6 +61,9 @@
    app.pluginManager.addElement("forms",forms_);
    app.pluginManager.addElement("formList",formList_);
    app.pluginManager.addElement("tables",tableRequirements_);
+   app.pluginManager.addElement("_formURL","/cr/shelter/create.s3json?options=true&references=true");
+   app.pluginManager.addElement("_submitPath","/cr/shelter.s3json");
+    
 
     // The master application controller
     function controller(config) {
@@ -388,6 +391,6 @@
 
     };
 
-    app.pluginManager.addObject(controller);
+    //app.pluginManager.addObject(controller);
 
 })(jQuery, window, document);

@@ -39,6 +39,9 @@
 
     controller.prototype.init = function (options) {
         console.log("moduleController init");
+        
+        // Init data
+        this._modelName = this._config["modelName"];
 
         // Register models for this controller
         for (var formName in this.forms) {
@@ -194,7 +197,10 @@
         var formItem = this.formList[name];
         var pageName = formItem["page"];
         var page = app.view.getPage(pageName);
-        var modelList = app.controller.getRecordCollection("mShelter");
+        var modelList = app.controller.getRecordCollection(this._modelName);
+        if (!modelList) {
+            modelList = {};
+        }
 
 
         // Initialize list server state to detect deleted items
@@ -213,7 +219,7 @@
             var model = modelList[uuid];
 
             if (!model) {
-                var modelObj = app.controller.getModel("mShelter");
+                var modelObj = app.controller.getModel(this._modelName);
                 model = new modelObj();
                 model.timestamp(1); // force the new data condition to be true
             }
@@ -309,7 +315,7 @@
 
         // save and submit
         this.storeOffline(model);
-        var modelList = app.controller.getRecordCollection("mShelter");
+        var modelList = app.controller.getRecordCollection(this._modelName);
         modelList[model.timestamp()] = model;
 
         if (app.controller.online()) {
@@ -337,7 +343,7 @@
         var page = app.view.getPage("page-edit-shelter");
         var pageTable = page._table;
         //var model = new mCaseData(form.get("form"));
-        var modelObj = app.controller.getModel("mShelter");
+        var modelObj = app.controller.getModel(this._modelName);
         var model = new modelObj();
         model.initData(form, page._table);
         //model.timestamp(Date.now());

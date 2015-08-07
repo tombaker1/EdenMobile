@@ -40,17 +40,19 @@
             classname: "editShelterPage",
             backButton: true
         },
-       {
+       /*{
             type: "model",
-            name: "mShelter",
-            script: "mShelter.js",
-            classname: "mShelter"
-        },
+            name: "shelter",
+            //script: "mShelter.js",
+            classname: "mFormData"
+        },*/
         {
             type: "controller",
             name: "shelterController",
             script: "shelterController.js",
-            classname: "moduleController"//,
+            classname: "moduleController",
+            modelName: "shelter",
+            modelClass: "mFormData"   //,
             //forms: "shelterForms",
             //formList: "shelterFormList",
             //tables: "shelterTables"

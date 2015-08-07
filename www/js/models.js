@@ -148,8 +148,29 @@
             return this._needsUpdate;
         },
 
+        //sendData: function () {
+        //    console.log("mFormData::sendData not implemented, should be overridden");
+        //},
         sendData: function () {
-            console.log("mFormData::sendData not implemented, should be overridden");
+            var record = {};
+            var changed = this.changed;
+            for (var key in changed) {
+                var value = changed[key];
+                record[key] = value;
+            }
+            
+            // If the model came from the server then it has a uuid
+            if (this.get("uuid")) {
+                record["@uuid"] = this.get("uuid");
+            } else {
+                var dateString = (new Date(this.timestamp())).toISOString();
+                record["@created_on"] = dateString;
+            }
+
+            var obj = {
+                $_cr_shelter: [record]
+            };
+            return JSON.stringify(obj);
         },
 
         getFormData: function (table) {

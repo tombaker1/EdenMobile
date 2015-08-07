@@ -86,18 +86,35 @@
                     break;
                 case "controller":
                     {
+                        // Do the controller
                         //console.log("start settings");
                         var obj = this.controllers[className];
                         var controller = new obj(data);
                         this.addController(className, controller);
+                        
+                        // Do the model config
+                        var modelClass = data["modelClass"];
+                        if (modelClass) {
+                            var modelName = data["modelName"];
+                            var modelData = {};
+                            var obj = app.controller.getModel(modelClass);
+                            //obj["name"] = data["name"];
+                            modelData[modelName] = obj;
+                            app.controller.addModel(modelData);
+                            //config["model"] = data["name"];
+                        }
 
                     }
                     break;
                 case "model":
                     {
-                        //var modelData = {};
-                        //modelData[name] = obj;
-                        //app.controller.addModel(modelData);
+                        var modelData = {};
+                        var obj = app.controller.getModel(className);
+                        //obj["name"] = data["name"];
+                        modelData[name] = obj;
+                        app.controller.addModel(modelData);
+                        config["model"] = data["name"];
+                        //plugin["model"] = data.["classname"];
 
                     }
                     break;

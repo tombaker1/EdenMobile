@@ -22,11 +22,11 @@
     "use strict";
     
     // XXX mShelter
-    // shelter
+    // XXXX shelter
     // page-edit-shelter
     // page-shelter
-    // shelter_id
-    // shelter_form
+    // XXX shelter_id
+    // XXX shelter_form
 
     // The master application controller
     function controller(config) {
@@ -40,7 +40,7 @@
         console.log("moduleController init");
         
         // Init data
-        this._modelName = this._config["modelName"];
+        this._modelType = this._config["modelType"];
 
         // Register models for this controller
         for (var formName in this.forms) {
@@ -114,9 +114,9 @@
             }
 
             // Update list
-            if (response.created) {
-                model.set("shelter_id", response.created[0].toString());
-            }
+            //if (response.created) {
+            //    model.set("shelter_id", response.created[0].toString());
+            //}
             var pageCases = app.view.getPage("page-shelter");
             if (pageCases) {
                 pageCases.setItem(model);
@@ -194,7 +194,7 @@
         var formItem = this.formList[name];
         var pageName = formItem["page"];
         var page = app.view.getPage(pageName);
-        var modelList = app.controller.getRecordCollection(this._modelName);
+        var modelList = app.controller.getRecordCollection(this._modelType);
         if (!modelList) {
             modelList = {};
         }
@@ -216,8 +216,8 @@
             var model = modelList[uuid];
 
             if (!model) {
-                var modelObj = app.controller.getModel(this._modelName);
-                model = new modelObj({"type":this._modelName});
+                var modelObj = app.controller.getModel(this._modelType);
+                model = new modelObj({"type":this._modelType});
                 model.timestamp(1); // force the new data condition to be true
             }
             model._serverState = 1;
@@ -312,7 +312,7 @@
 
         // save and submit
         this.storeOffline(model);
-        var modelList = app.controller.getRecordCollection(this._modelName);
+        var modelList = app.controller.getRecordCollection(this._modelType);
         modelList[model.timestamp()] = model;
 
         if (app.controller.online()) {
@@ -340,7 +340,7 @@
         var page = app.view.getPage("page-edit-shelter");
         var pageTable = page._table;
         //var model = new mCaseData(form.get("form"));
-        var modelObj = app.controller.getModel(this._modelName);
+        var modelObj = app.controller.getModel(this._modelType);
         var model = new modelObj();
         model.initData(form, page._table);
         //model.timestamp(Date.now());

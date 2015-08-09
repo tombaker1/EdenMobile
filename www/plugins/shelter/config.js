@@ -51,7 +51,7 @@
             name: "shelterController",
             script: "shelterController.js",
             classname: "moduleController",
-            modelName: "shelter",
+            modelType: "shelter",
             modelClass: "mFormData"   //,
             //forms: "shelterForms",
             //formList: "shelterFormList",

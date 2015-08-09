@@ -95,11 +95,11 @@
                         // Do the model config
                         var modelClass = data["modelClass"];
                         if (modelClass) {
-                            var modelName = data["modelName"];
+                            var modelType = data["modelType"];
                             var modelData = {};
                             var obj = app.controller.getModel(modelClass);
                             //obj["name"] = data["name"];
-                            modelData[modelName] = obj;
+                            modelData[modelType] = obj;
                             app.controller.addModel(modelData);
                             //config["model"] = data["name"];
                         }

@@ -315,7 +315,7 @@
 
             while (this._submitState.list.length) {
                 var model = this._submitState.list.shift();
-                var type = model._type;
+                var type = model.type();
                 var path = this.getHostURL();
                 var data = model.sendData();
                 var pluginController = this.getControllerByModel(type);

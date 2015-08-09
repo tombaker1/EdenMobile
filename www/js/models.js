@@ -80,9 +80,9 @@
             this._type = "";
             this._table = null;
 
-            //if (options && options.table) {
-            //    this.initData(options.type, options.table);
-            //}
+            if (options && options["type"]) {
+                this._type = options["type"];
+            }
 
 
             // Call the original constructor

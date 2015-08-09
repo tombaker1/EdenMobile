@@ -220,7 +220,7 @@
 
             if (!model) {
                 var modelObj = app.controller.getModel(this._modelName);
-                model = new modelObj();
+                model = new modelObj({"type":this._modelName});
                 model.timestamp(1); // force the new data condition to be true
             }
             model._serverState = 1;

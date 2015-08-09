@@ -21,7 +21,7 @@
 (function ($, window, document, undefined) {
     "use strict";
     
-    // mShelter
+    // XXX mShelter
     // shelter
     // page-edit-shelter
     // page-shelter
@@ -32,7 +32,6 @@
     function controller(config) {
         //console.log("settings controller");
         this._pages = {};
-        //this._formURL = "/cr/shelter/create.s3json?options=true&references=true";
         this._config = config;
         _.extend(this,config);
     };
@@ -96,8 +95,6 @@
     };
 
     controller.prototype.submitPath = function (type) {
-        //var path = "/cr/shelter.s3json";
-
         return this._submitPath;
     };
 
@@ -108,7 +105,7 @@
 
         if (response["status"] === "success") {
 
-            app.controller.updateData("shelter");
+            app.controller.updateData(type);
 
             // If on new page then close
             var currentPage = app.view.getVisiblePage();

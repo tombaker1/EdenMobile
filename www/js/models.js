@@ -68,7 +68,7 @@
         // The construture has the superclass initialization
         // the subclasses implement initialize
         constructor: function (options) {
-            console.log("mFormData constructor");
+            //console.log("mFormData constructor");
 
             // superclass member initialization
 
@@ -90,7 +90,7 @@
         },
 
         initialize: function (options) {
-            console.log("mFormData initialize");
+            //console.log("mFormData initialize");
         },
 
         submit: function () {
